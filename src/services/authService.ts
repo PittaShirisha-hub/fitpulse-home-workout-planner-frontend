@@ -1,15 +1,19 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/auth";
-
-export const loginUser = (data: { email: string; password: string }) => {
-  return axios.post(`${API}/login`, data);
-};
+const API = axios.create({
+  baseURL: "https://fitpulse-home-workout-planner-backend.onrender.com/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export const registerUser = (data: {
   name: string;
   email: string;
   password: string;
-}) => {
-  return axios.post(`${API}/register`, data);
-};
+}) => API.post("/auth/register", data);
+
+export const loginUser = (data: {
+  email: string;
+  password: string;
+}) => API.post("/auth/login", data);
